@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('choultries', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('pin');
-            $table->char('phone_number', 12)->nullable();
-            $table->string('email')->unique();
-            $table->string('pname');
+            $table->bigInteger('customer_id')->unsigned()->index()->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->string('start_date');
+            $table->string('end_date');
+            $table->string('advance');
+            $table->dateTime('advance_date_time');
+            $table->string('total');
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('choultries');
+        Schema::dropIfExists('bookings');
     }
 };

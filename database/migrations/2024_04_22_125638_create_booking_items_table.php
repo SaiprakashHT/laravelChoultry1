@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('booking_items', function (Blueprint $table) {
             $table->id();
-            $table->string('booking_id');
+            $table->bigInteger('booking_id')->unsigned()->index()->nullable();
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade'); 
             $table->string('inventory_id');
             $table->string('price');
             $table->string('quantity');

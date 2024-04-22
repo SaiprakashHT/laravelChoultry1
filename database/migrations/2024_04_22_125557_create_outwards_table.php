@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('outward_form', function (Blueprint $table) {
+        Schema::create('outwards', function (Blueprint $table) {
             $table->id();
             $table->string('vendor_name');
             $table->string('vendor_phone')->nullable();
             $table->string('description');
             $table->char('amount')->nullable();
+            $table->bigInteger('user_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('outward_form');
+        Schema::dropIfExists('outwards');
     }
 };

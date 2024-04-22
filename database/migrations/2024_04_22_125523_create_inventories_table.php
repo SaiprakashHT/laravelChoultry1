@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('choultries', function (Blueprint $table) {
+        Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->string('pin');
-            $table->char('phone_number', 12)->nullable();
-            $table->string('email')->unique();
-            $table->string('pname');
+            $table->string('price')->nullable();
+            $table->string('stock');
+            $table->string('igst');
+            $table->string('sgst');
+            $table->string('cgst');
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('choultries');
+        Schema::dropIfExists('inventories');
     }
 };

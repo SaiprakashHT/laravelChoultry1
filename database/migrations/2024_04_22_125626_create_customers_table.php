@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
-            $table->string('phone_number')->nullable();
-            $table->string('stock');
-            $table->string('igst');
-            $table->string('sgst');
-            $table->string('cgst');
-            $table->string('user_id');
+            $table->string('phone', 12)->nullable();
+            $table->string('address');
+            $table->string('pincode');
+            $table->string('gst_no');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inventories');
+        Schema::dropIfExists('customers');
     }
 };
