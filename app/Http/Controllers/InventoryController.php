@@ -13,6 +13,8 @@ class InventoryController extends Controller
     public function index()
     {
         //
+        $inventory = Inventory::all();
+        return response()->json($inventory);
     }
 
     /**
@@ -29,6 +31,19 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'id' => 'required|max:255',
+            'name' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'igst' => 'required',
+            'sgst' => 'required',
+            'cgst' => 'required',
+
+        ]);
+
+        $inventory = Inventory::create($request->all());
+        return response()->json($inventory);
     }
 
     /**
@@ -37,6 +52,8 @@ class InventoryController extends Controller
     public function show(Inventory $inventory)
     {
         //
+        $inventory = Inventory::find($inventory);
+        return response()->json($inventory);
     }
 
     /**
@@ -45,6 +62,7 @@ class InventoryController extends Controller
     public function edit(Inventory $inventory)
     {
         //
+        $inventory = Inventory::find($id);
     }
 
     /**
@@ -53,6 +71,20 @@ class InventoryController extends Controller
     public function update(Request $request, Inventory $inventory)
     {
         //
+        $request->validate([
+            'id' => 'required|max:255',
+            'name' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'igst' => 'required',
+            'sgst' => 'required',
+            'cgst' => 'required',
+
+        ]);
+
+        $inventory = Inventory::find($id);
+        $inventory->update($request->all());
+        return response()->json($inventory);
     }
 
     /**
@@ -61,5 +93,8 @@ class InventoryController extends Controller
     public function destroy(Inventory $inventory)
     {
         //
+        $inventory = Inventory::find($id);
+        $inventory->delete();
+        return response()->json(['message' => 'Successfully deleted']);
     }
 }

@@ -4,11 +4,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChoultryController;
+use App\Http\Controllers\BillController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingItemController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\OutwardController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserRoleController;
 
+    Route::get('login', [AuthController::class, 'login']);
+    Route::get('register', [AuthController::class, 'register']);
+    Route::get('users', [AuthController::class, 'user']);
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
+    
 
     Route::group(['middleware' => 'auth:sanctum'], function() {
       Route::get('logout', [AuthController::class, 'logout']);

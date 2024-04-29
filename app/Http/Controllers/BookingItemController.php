@@ -13,6 +13,8 @@ class BookingItemController extends Controller
     public function index()
     {
         //
+        $bookingItem = BookingItem::all();
+        return response()->json($bookingItem);
     }
 
     /**
@@ -29,6 +31,17 @@ class BookingItemController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'id' => 'max:255',
+            'inventory_id' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'total' => 'required',
+
+        ]);
+
+        $bookingItem = BookingItem::create($request->all());
+        return response()->json($bookingItem);
     }
 
     /**
@@ -37,6 +50,8 @@ class BookingItemController extends Controller
     public function show(BookingItem $bookingItem)
     {
         //
+        $bookingItem = BookingItem::find($bookingItem);
+        return response()->json($bookingItem);
     }
 
     /**
@@ -45,6 +60,8 @@ class BookingItemController extends Controller
     public function edit(BookingItem $bookingItem)
     {
         //
+        $bookingItem = BookingItem::find($id);
+
     }
 
     /**
@@ -53,6 +70,18 @@ class BookingItemController extends Controller
     public function update(Request $request, BookingItem $bookingItem)
     {
         //
+        $request->validate([
+            'id' => 'max:255',
+            'inventory_id' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'total' => 'required',
+
+        ]);
+
+        $bookingItem = BookingItem::find($id);
+        $bookingItem->update($request->all());
+        return response()->json($bookingItem);
     }
 
     /**
@@ -61,5 +90,8 @@ class BookingItemController extends Controller
     public function destroy(BookingItem $bookingItem)
     {
         //
+        $bookingItem = BookingItem::find($id);
+        $bookingItem->delete();
+        return response()->json(['message' => 'Successfully deleted']);
     }
 }

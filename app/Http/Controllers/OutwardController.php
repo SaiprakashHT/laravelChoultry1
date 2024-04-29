@@ -13,6 +13,8 @@ class OutwardController extends Controller
     public function index()
     {
         //
+        $outward = Outward::all();
+        return response()->json($outward);
     }
 
     /**
@@ -29,6 +31,17 @@ class OutwardController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'id' => 'max:255',
+            'vendor_name' => 'required',
+            'vendor_phone' => 'required',
+            'description' => 'required',
+            'amount' => 'required',
+
+        ]);
+
+        $outward = Outward::create($request->all());
+        return response()->json($outward);
     }
 
     /**
@@ -37,6 +50,8 @@ class OutwardController extends Controller
     public function show(Outward $outward)
     {
         //
+        $outward = Outward::find($outward);
+        return response()->json($outward);
     }
 
     /**
@@ -45,6 +60,7 @@ class OutwardController extends Controller
     public function edit(Outward $outward)
     {
         //
+        $outward = Outward::find($id);
     }
 
     /**
@@ -53,6 +69,18 @@ class OutwardController extends Controller
     public function update(Request $request, Outward $outward)
     {
         //
+        $request->validate([
+            'id' => 'max:255',
+            'vendor_name' => 'required',
+            'vendor_phone' => 'required',
+            'description' => 'required',
+            'amount' => 'required',
+
+        ]);
+
+        $outward = Outward::find($id);
+        $outward->update($request->all());
+        return response()->json($outward);
     }
 
     /**
@@ -61,5 +89,8 @@ class OutwardController extends Controller
     public function destroy(Outward $outward)
     {
         //
+        $outward = Outward::find($id);
+        $outward->delete();
+        return response()->json(['message' => 'Successfully deleted']);
     }
 }

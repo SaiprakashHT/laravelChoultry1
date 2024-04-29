@@ -13,6 +13,8 @@ class BillController extends Controller
     public function index()
     {
         //
+        $bill = Bill::all();
+        return response()->json($bill);
     }
 
     /**
@@ -29,6 +31,20 @@ class BillController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'booking_id' => 'max:255',
+            'customer_name' => 'required',
+            'customer_phone' => 'required',
+            'customer_address' => 'required',
+            'customer_gst' => 'required',
+            'bill_no' => 'required',
+            'paid' => 'required',
+            'paid_date_time' => 'required',
+
+        ]);
+
+        $bill = Bill::create($request->all());
+        return response()->json($bill);
     }
 
     /**
@@ -37,6 +53,8 @@ class BillController extends Controller
     public function show(Bill $bill)
     {
         //
+        $bill = Bill::find($bill);
+        return response()->json($bill);
     }
 
     /**
@@ -45,6 +63,7 @@ class BillController extends Controller
     public function edit(Bill $bill)
     {
         //
+        $bill = Bill::find($id);
     }
 
     /**
@@ -53,6 +72,21 @@ class BillController extends Controller
     public function update(Request $request, Bill $bill)
     {
         //
+        $request->validate([
+            'booking_id' => 'max:255',
+            'customer_name' => 'required',
+            'customer_phone' => 'required',
+            'customer_address' => 'required',
+            'customer_gst' => 'required',
+            'bill_no' => 'required',
+            'paid' => 'required',
+            'paid_date_time' => 'required',
+
+        ]);
+
+        $bill = Bill::find($id);
+        $bill->update($request->all());
+        return response()->json($bill);
     }
 
     /**
@@ -61,5 +95,8 @@ class BillController extends Controller
     public function destroy(Bill $bill)
     {
         //
+        $bill = Bill::find($id);
+        $bill->delete();
+        return response()->json(['message' => 'Successfully deleted']);
     }
 }

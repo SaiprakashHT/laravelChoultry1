@@ -13,6 +13,8 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $role = Role::all();
+        return response()->json($role);
     }
 
     /**
@@ -29,6 +31,14 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'id' => 'max:255',
+            'name' => 'required',
+
+        ]);
+
+        $role = Role::create($request->all());
+        return response()->json($role);
     }
 
     /**
@@ -37,6 +47,8 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         //
+        $role = Role::find($role);
+        return response()->json($role);
     }
 
     /**
@@ -45,6 +57,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //
+        $role = Role::find($id);
     }
 
     /**
@@ -53,6 +66,15 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         //
+        $request->validate([
+            'id' => 'max:255',
+            'name' => 'required',
+
+        ]);
+
+        $role = Role::find($id);
+        $role->update($request->all());
+        return response()->json($role);
     }
 
     /**
@@ -61,5 +83,8 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+        $role = Role::find($id);
+        $role->delete();
+        return response()->json(['message' => 'Successfully deleted']);
     }
 }

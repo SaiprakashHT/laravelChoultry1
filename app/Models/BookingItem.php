@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class BookingItem extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'inventory_id',
+        'price',
+        'quantity',
+        'total',
+    ];
 }

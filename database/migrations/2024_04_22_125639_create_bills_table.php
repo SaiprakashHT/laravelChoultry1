@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('customer_gst');
             $table->string('bill_no');
             $table->string('paid');
-            $table->string('paid_date_time');
+            $table->dateTime('paid_date_time');
             $table->timestamps();
         });
     }
