@@ -44,10 +44,10 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Role $role)
+    public function show($id)
     {
         //
-        $role = Role::find($role);
+        $role = Role::find($id);
         return response()->json($role);
     }
 
@@ -63,11 +63,10 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
-            'id' => 'max:255',
             'name' => 'required',
 
         ]);
@@ -80,7 +79,7 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
         //
         $role = Role::find($id);

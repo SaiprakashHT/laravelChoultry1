@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\UserRole;
+use App\Models\Role;
 
 class AuthController extends Controller
 {
@@ -112,7 +114,13 @@ class AuthController extends Controller
         $user = User::where('phone', $request->phone)->first();
         if($user && Hash::check($request->password, $user->password)){
             $token = $user->createToken('Personal Access Token')->plainTextToken;
-            $response=['user'=>$user, 'token'=>$token];
+            $user_roles = UserRole::where([["user_id", "=", $user->id]])->get();
+            $user_roles_array = array();
+            foreach($user_roles as $index=>$user_role){
+                $role = Role::find($user_role->role_id);
+                array_push($user_roles_array, $role->name);
+            }
+            $response=['user'=>$user, 'token'=>$token, 'role' => $user_roles_array];
             return response()->json($response, 200);
 
         }

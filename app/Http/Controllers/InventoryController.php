@@ -18,21 +18,13 @@ class InventoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         //
         $request->validate([
-            'id' => 'required|max:255',
+            'id' => 'max:255',
             'name' => 'required',
             'price' => 'required',
             'stock' => 'required',
@@ -43,6 +35,8 @@ class InventoryController extends Controller
         ]);
 
         $inventory = Inventory::create($request->all());
+        $inventory->user_id = $request->user()->id;
+        $inventory->save();
         return response()->json($inventory);
     }
 
@@ -68,12 +62,11 @@ class InventoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Inventory $inventory)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
-            'id' => 'required|max:255',
-            'name' => 'required',
+            'name' => 'required|max:255',
             'price' => 'required',
             'stock' => 'required',
             'igst' => 'required',
@@ -90,7 +83,7 @@ class InventoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inventory $inventory)
+    public function destroy($id)
     {
         //
         $inventory = Inventory::find($id);

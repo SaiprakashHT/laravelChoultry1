@@ -41,16 +41,18 @@ class OutwardController extends Controller
         ]);
 
         $outward = Outward::create($request->all());
+        $outward->user_id = $request->user()->id;
+        $outward->save();
         return response()->json($outward);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Outward $outward)
+    public function show($id)
     {
         //
-        $outward = Outward::find($outward);
+        $outward = Outward::find($id);
         return response()->json($outward);
     }
 
@@ -66,7 +68,7 @@ class OutwardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Outward $outward)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
@@ -86,7 +88,7 @@ class OutwardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Outward $outward)
+    public function destroy($id)
     {
         //
         $outward = Outward::find($id);

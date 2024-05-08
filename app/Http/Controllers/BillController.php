@@ -50,10 +50,10 @@ class BillController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Bill $bill)
+    public function show($id)
     {
         //
-        $bill = Bill::find($bill);
+        $bill = Bill::find($id);
         return response()->json($bill);
     }
 
@@ -69,7 +69,7 @@ class BillController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bill $bill)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
@@ -92,7 +92,7 @@ class BillController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bill $bill)
+    public function destroy($id)
     {
         //
         $bill = Bill::find($id);

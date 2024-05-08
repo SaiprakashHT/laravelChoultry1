@@ -10,9 +10,9 @@ class ChoultryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $choultries = Choultry::all();
+        $choultries = Choultry::where([["user_id", "=", $request->user()->id]])->get();
         return response()->json($choultries);
     }
 
